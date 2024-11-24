@@ -21,11 +21,8 @@ export default function Home() {
       setResult(data)
       setScanning(false)
 
-      // Use environment variable for localhost URL
-      const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
-
-      // Fetch the backend TOTP
-      const response = await axios.get(`${baseURL}/api/totp/`)
+      // Make a GET request to fetch the backend TOTP
+      const response = await axios.get('https://qr-doorlock.onrender.com/api/totp/')
       const backendTOTP = response.data.totp
 
       // Compare the backend TOTP with the scanned result
@@ -35,7 +32,7 @@ export default function Home() {
         setMessage('QR code matched and acknowledgment sent successfully!')
 
         // Send a POST request with acknowledgment
-        await axios.post(`${baseURL}/api/mqtt/`, {
+        await axios.post('https://qr-doorlock.onrender.com/api/mqtt/', {
           acknowledgment: true,
         })
       } else {
@@ -49,7 +46,8 @@ export default function Home() {
     }
   }
 
-  const handleError = () => {
+  const handleError = (error: Error) => {
+    console.error('QR Scanner error:', error)
     setScanning(false)
   }
 
@@ -99,3 +97,4 @@ export default function Home() {
     </main>
   )
 }
+
