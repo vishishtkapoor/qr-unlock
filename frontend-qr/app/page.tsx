@@ -46,7 +46,7 @@ export default function Home() {
     }
   }
 
-  const handleError = (error: Error) => {
+  const handleError = () => {
     setScanning(false)
   }
 
