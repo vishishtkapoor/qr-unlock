@@ -21,7 +21,7 @@ exports.sendAcknowledgment = (req, res) => {
             return res.status(400).json({ error: 'Invalid acknowledgment value. Must be true or false.' });
         }
 
-        const message = acknowledgment ? 'YES' : 'NO';
+        const message = acknowledgment ? 'ON' : 'OFF';
         console.log(`Publishing MQTT message: ${message} to topic: ${mqttTopic}`);
 
         mqttClient.publish(mqttTopic, message, (err) => {
